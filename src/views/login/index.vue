@@ -71,6 +71,24 @@ export default {
       // 传入一个回调函数 isOk为true 说明 所有的校验负责都成功了
       // 如果为false  说明有错误
       this.$refs.loginForm.validate((isOk) => {
+        if (isOk) {
+          this.$http({
+            url: '/authorizations',
+            method: 'post',
+            data: this.loginForm
+          }).then(res => {
+            // console.log(res.data.data.token)
+            // 放到前端缓存中
+            window.localStorage.setItem('user-token', res.data.data.token)
+            // 编程时导航
+            this.$router.push('/') // 登陆成功 跳转
+          }).catch(() => {
+            this.$message({
+              message: '手机号或者验证码错误',
+              type: 'warning'
+            })
+          })
+        }
       })
     //   this.$message('提示')
     }
