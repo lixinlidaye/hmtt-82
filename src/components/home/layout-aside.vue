@@ -12,7 +12,7 @@
         <i class="el-icon-s-home"></i>
         <span slot="title">首页</span>
       </el-menu-item>
-      <el-submenu>
+      <el-submenu index='1'>
           <template slot="title">
           <i class="el-icon-notebook-1"></i>
           <span>内容管理</span>
@@ -22,7 +22,7 @@
           <el-menu-item>评论管理</el-menu-item>
           <el-menu-item>素材管理</el-menu-item>
       </el-submenu>
-      <el-submenu>
+      <el-submenu index='3'>
           <template slot="title">
           <i class="el-icon-s-custom"></i>
           <span>粉丝管理</span>
@@ -32,7 +32,7 @@
           <el-menu-item>粉丝列表</el-menu-item>
           <el-menu-item>粉丝画像</el-menu-item>
       </el-submenu>
-      <el-menu-item index="3" disabled>
+      <el-menu-item index="3">
         <i class="el-icon-s-tools"></i>
         <span slot="title">账户信息</span>
       </el-menu-item>
@@ -48,7 +48,7 @@ export default {
 
 <style lang='less' scoped>
 .layout-aside {
-    width: 220px;
+    width: 250px;
     height: 100vh;
     background-color: #323745;
     .title{
