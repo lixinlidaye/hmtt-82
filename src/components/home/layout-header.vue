@@ -3,15 +3,17 @@
     <el-row class="layout-header" type='flex' justify='space-between'>
         <!-- span 是给col的宽度  elementUI将页面分为2 4 分 -->
         <el-col class="left" :span="6">
-            <i class="el-icon-s-unfole"></i>
+            <i class="el-icon-s-unfold"></i>
             <span>爱谁谁有限公司</span>
         </el-col>
         <el-col class="right" :span="2">
-            <img class="head-img" src="../../assets/img/avatar.jpg" alt="">
+            <!-- <img class="head-img" src="../../assets/img/avatar.jpg" alt=""> -->
+            <!-- 属性不给: 就相当于字符串 -->
+            <img class="head-img" :src="userInfo.photo ? userInfo.photo : defaultImg" alt="">
         <el-dropdown trigger="click">
             <!-- 匿名插槽 -->
             <span class="el-dropdown-link">
-             李大爷<i class="el-icon-arrow-down el-icon--right"></i>
+            {{userInfo.name}}<i class="el-icon-arrow-down el-icon--right"></i>
             </span>
             <!-- 具名插槽 -->
             <el-dropdown-menu slot="dropdown">
@@ -26,7 +28,27 @@
 
 <script>
 export default {
-
+  data () {
+    return {
+      userInfo: {},
+      defaultImg: require('../../assets/img/avatar.jpg')
+    }
+  },
+  methods: {
+    // 获取用户数据
+    getUserInfor () {
+      let token = window.localStorage.getItem('user-token') // 获取token
+      this.$http({
+        url: '/user/profile',
+        header: { 'Authorization': `Bearer ${token}` }
+      }).then(res => {
+        this.userInfo = res.data.data
+      })
+    }
+  },
+  created () {
+    this.getUserInfor()
+  }
 }
 </script>
 
@@ -34,7 +56,7 @@ export default {
     .layout-header {
         padding:8px 0;
         .left {
-            .icon{
+            .el-icon-s-unfold{
                 font-size:22px;
                 margin-right: 3px;
             }
