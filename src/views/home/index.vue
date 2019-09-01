@@ -14,13 +14,13 @@
 </template>
 
 <script>
-import layoutAside from '../../components/home/layout-aside'
-import layoutHeader from '../../components/home/layout-header'
+// import layoutAside from '../../components/home/layout-aside'
+// import layoutHeader from '../../components/home/layout-header'
 export default {
-  components: {
-    'layout-aside': layoutAside,
-    'layout-header': layoutHeader
-  }
+  // components: {
+  //   'layout-aside': layoutAside,
+  //   'layout-header': layoutHeader
+  // }
 //   methods: {
 //     handleOpen (key, keyPath) {
 //       console.log(key, keyPath)

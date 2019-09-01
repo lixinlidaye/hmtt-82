@@ -1,6 +1,7 @@
 <template>
   <!-- 用el-row el-col -->
     <el-row class="layout-header" type='flex' justify='space-between'>
+        <!-- span 是给col的宽度  elementUI将页面分为2 4 分 -->
         <el-col class="left" :span="6">
             <i class="el-icon-s-unfole"></i>
             <span>爱谁谁有限公司</span>
@@ -8,9 +9,11 @@
         <el-col class="right" :span="2">
             <img class="head-img" src="../../assets/img/avatar.jpg" alt="">
         <el-dropdown trigger="click">
+            <!-- 匿名插槽 -->
             <span class="el-dropdown-link">
-             下拉菜单<i class="el-icon-arrow-down el-icon--right"></i>
+             李大爷<i class="el-icon-arrow-down el-icon--right"></i>
             </span>
+            <!-- 具名插槽 -->
             <el-dropdown-menu slot="dropdown">
             <el-dropdown-item icon="el-icon-user">个人信息</el-dropdown-item>
             <el-dropdown-item icon="el-icon-position">git地址</el-dropdown-item>
@@ -33,6 +36,7 @@ export default {
         .left {
             .icon{
                 font-size:22px;
+                margin-right: 3px;
             }
             display: flex;
             align-items: center;
