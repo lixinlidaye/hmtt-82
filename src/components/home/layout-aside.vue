@@ -7,6 +7,7 @@
     <el-menu
       background-color="#323745"
       text-color="#adafb5"
+      style="width:201px"
       active-text-color="#ffd04b" router>
       <el-menu-item index="/">
         <i class="el-icon-s-home"></i>
@@ -51,6 +52,7 @@ export default {
     width: 200px;
     height: 100vh;
     background-color: #323745;
+    overflow: hidden;
     .title{
         text-align: center;
         background-color: #2e2f32;
