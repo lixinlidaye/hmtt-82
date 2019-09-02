@@ -79,7 +79,7 @@ export default {
           }).then(res => {
             // console.log(res.data.data.token)
             // 放到前端缓存中
-            window.localStorage.setItem('user-token', res.data.data.token)
+            window.localStorage.setItem('user-token', res.data.token)
             // 编程时导航
             this.$router.push('/') // 登陆成功 跳转
           }).catch(() => {
