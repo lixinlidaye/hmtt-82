@@ -82,12 +82,13 @@ export default {
             window.localStorage.setItem('user-token', res.data.token)
             // 编程时导航
             this.$router.push('/') // 登陆成功 跳转
-          }).catch(() => {
-            this.$message({
-              message: '手机号或者验证码错误',
-              type: 'warning'
-            })
           })
+          // .catch(() => {
+          //   this.$message({
+          //     message: '手机号或者验证码错误',
+          //     type: 'warning'
+          //   })
+          // })
         }
       })
     //   this.$message('提示')
