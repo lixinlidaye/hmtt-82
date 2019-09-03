@@ -1,6 +1,6 @@
 <template>
   <!-- 最外层 el-card 卡片组件 -->
-  <el-card>
+  <el-card v-loading="loading">
       <bread-crumb slot="header">
         <!-- 面包屑的具名 插槽  -->
         <template slot="title">评论列表</template>
@@ -33,6 +33,7 @@
 export default {
   data () {
     return {
+      loading: false, // 控制进度条的状态
       list: [],
       page: {
         page: 1, // 当前页码
@@ -64,11 +65,13 @@ export default {
       return row.comment_status ? '正常' : '关闭'
     },
     getComments () {
+      this.loading = true // 请求数据前 把进度条打开
       // query 参数 就相当于get参数 路径参数 url 参数
       this.$http({
         url: '/articles',
         params: { response_type: 'comment', page: this.page.page, per_page: this.page.pageSize }
       }).then(result => {
+        this.loading = false
         // console.log(result.data)
         this.list = result.data.results
         this.page.total = result.data.total_count
