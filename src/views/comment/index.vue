@@ -18,6 +18,14 @@
               </template>
           </el-table-column>
       </el-table>
+      <el-row type='flex' justify='center' style='margin:15px'>
+          <!-- 分页组件  -->
+            <el-pagination
+            @current-change="changePage" :current-page="page.page" :page-size="page.pageSize" :total="page.total"
+            background
+            layout="prev, pager, next">
+            </el-pagination>
+      </el-row>
   </el-card>
 </template>
 
@@ -25,17 +33,27 @@
 export default {
   data () {
     return {
-      list: []
+      list: [],
+      page: {
+        page: 1, // 当前页码
+        pageSize: 10, // 当前每页条数
+        total: 0 // 总条数
+      }
     }
   },
   methods: {
+    changePage (newPage) {
+      // 给当前页码更新最新值
+      this.page.page = newPage
+      this.getComments() // 获取最新页码的数据
+    },
     openOrClose (row) {
       let mess = row.comment_status ? '关闭' : '打开'
       this.$confirm(`您是否要${mess}评论?`, '提示').then(() => {
         this.$http({
           method: 'put',
           url: '/comments/status',
-          params: { article_id: row.id },
+          params: { article_id: row.id.toString() },
           data: { allow_comment: !row.comment_status }
         }).then(result => {
           this.getComments()
@@ -49,10 +67,11 @@ export default {
       // query 参数 就相当于get参数 路径参数 url 参数
       this.$http({
         url: '/articles',
-        params: { response_type: 'comment' }
+        params: { response_type: 'comment', page: this.page.page, per_page: this.page.pageSize }
       }).then(result => {
         // console.log(result.data)
         this.list = result.data.results
+        this.page.total = result.data.total_count
       })
     }
   },
