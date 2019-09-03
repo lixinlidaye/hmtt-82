@@ -25,10 +25,11 @@ export default new Router({
         component: Main
       },
       {
-        // path: '/home/comment',
+        // path:'/home/comment'
         path: 'comment',
         component: () => import('./views/comment')
-      }]
+      }
+      ]
     }
     // {
     //   // path: '/about',
