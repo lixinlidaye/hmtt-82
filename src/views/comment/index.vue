@@ -14,7 +14,7 @@
           <el-table-column label="操作">
               <template slot-scope="obj">
               <el-button size="small" type='text'>修改评论</el-button>
-              <el-button size="small" type='text' :style="{color:obj.row.comment_status ? '#E6A23C' : '#409EFF'}">{{obj.row.comment_status ? '关闭评论' : '打开评论'}}</el-button>
+              <el-button size="small" type='text' @click="openOrClose(obj.row)" :style="{color:obj.row.comment_status ? '#E6A23C' : '#409EFF'}">{{obj.row.comment_status ? '关闭评论' : '打开评论'}}</el-button>
               </template>
           </el-table-column>
       </el-table>
@@ -29,6 +29,19 @@ export default {
     }
   },
   methods: {
+    openOrClose (row) {
+      let mess = row.comment_status ? '关闭' : '打开'
+      this.$confirm(`您是否要${mess}评论?`, '提示').then(() => {
+        this.$http({
+          method: 'put',
+          url: '/comments/status',
+          params: { article_id: row.id },
+          data: { allow_comment: !row.comment_status }
+        }).then(result => {
+          this.getComments()
+        })
+      })
+    },
     formatter (row) {
       return row.comment_status ? '正常' : '关闭'
     },
