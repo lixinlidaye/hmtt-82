@@ -23,6 +23,12 @@
 
               </el-card>
             </div>
+          <el-row type="flex" justify='center'>
+            <el-pagination @current-change="changePage" :current-page="page.page" :page-size="page.pageSize" :total="page.total"
+              background
+              layout="prev, pager, next">
+            </el-pagination>
+          </el-row>
 
           </el-tab-pane>
           <el-tab-pane label="收藏图片" name="collect">
@@ -31,6 +37,12 @@
               <img :src="item.url" alt="">
               </el-card>
             </div>
+          <el-row type="flex" justify='center'>
+            <el-pagination @current-change="changePage" :current-page="page.page" :page-size="page.pageSize" :total="page.total"
+              background
+              layout="prev, pager, next">
+            </el-pagination>
+          </el-row>
           </el-tab-pane>
       </el-tabs>
   </el-card>
@@ -41,27 +53,40 @@ export default {
   data () {
     return {
       activeName: 'all',
-      list: []
+      list: [],
+      page: {
+        page: 1,
+        pageSize: 10,
+        total: 0
+      }
     }
   },
   methods: {
+    changePage (newPage) {
+      this.page.page = newPage
+      this.getMaterial() // 请求最新的数据
+    },
     //  切换页签
     changeTab () {
       // this.activeName是最新的页签
       // 加载不同类型的数据
       // all => 所有数据
       // collect => 去加载收藏数据
+      this.page.page = 1
       this.getMaterial()
     },
     getMaterial () {
       this.$http({
         url: '/user/images',
         params: {
+          page: this.page.page, // 默认第一次第一页
+          per_page: this.page.pageSize, // 默认10条
           collect: this.activeName === 'collect'
           // collect 为false 就是查全部数据 collect 为true 就是查收藏数据
         }
       }).then(result => {
         this.list = result.data.results // 接收数据
+        this.page.total = result.data.total_count // 将图片总数赋值总页
       })
     }
   },
