@@ -16,8 +16,8 @@
 
               <el-row class='operate' type='flex' align="middle" justify='space-around'>
 
-                <i :style="{color:item.is_collected ? 'red' : ''}" class="el-icon-star-on"></i>
-                <i class="el-icon-delete-solid"></i>
+                <i @click='collectOrCancel(item)' :style="{color:item.is_collected ? 'red' : ''}" class="el-icon-star-on"></i>
+                <i @click='delImg(item)' class="el-icon-delete-solid"></i>
 
               </el-row>
 
@@ -62,6 +62,31 @@ export default {
     }
   },
   methods: {
+    // 收藏或者取消收藏
+    collectOrCancel (item) {
+      let mess = item.is_collected ? '取消' : ''
+      this.$confirm(`您确定要${mess}收藏这张图片?`, '提示').then(() => {
+        // 确定收藏或者取消收藏
+        this.$http({
+          url: `/user/images/${item.id}`,
+          method: 'put',
+          data: { collect: !item.is_collected } // 取相反
+        }).then(() => {
+          this.getMaterial() // 重新加载
+        })
+      })
+    },
+    delImg (item) {
+      this.$confirm('您确定删除此图片吗?', '提示').then(() => {
+        // 确定要删除
+        this.$http({
+          url: `/user/images/${item.id}`,
+          method: 'delete'
+        }).then(() => {
+          this.getMaterial()
+        })
+      })
+    },
     changePage (newPage) {
       this.page.page = newPage
       this.getMaterial() // 请求最新的数据

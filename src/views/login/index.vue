@@ -77,7 +77,7 @@ export default {
             method: 'post',
             data: this.loginForm
           }).then(res => {
-            // console.log(res.data.data.token)
+            // console.log(res.data.token)
             // 放到前端缓存中
             window.localStorage.setItem('user-token', res.data.token)
             // 编程时导航

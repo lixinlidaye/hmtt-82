@@ -44,6 +44,7 @@ export default {
         // headers: { 'Authorization': `Bearer ${token}` }
       }).then(result => {
         this.userInfo = result.data
+        // console.log(result.data.data.token)
       })
     },
     //   点击菜单项触发的方法
